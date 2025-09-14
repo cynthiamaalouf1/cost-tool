@@ -91,7 +91,7 @@ export const ArabicExcelTable: React.FC = () => {
           {rows.map((row) => {
             const { x, y } = row;
 
-            // ✅ calculations
+            // ✅ الحسابات
             const sekeh = x - 3.2;
             const ka3eb = (x + 0.6) / 2;
             const janeb = y + 5;
