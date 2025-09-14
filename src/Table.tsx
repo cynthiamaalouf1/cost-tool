@@ -1,3 +1,4 @@
+// src/components/AggregatedTable.tsx
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,16 +18,16 @@ interface Row {
 }
 
 const COLUMN_TITLES = {
-  x: "العرض (X)",
-  y: "العلو (Y)",
-  sekeh: "سيكه (X - 3.2)",
-  ka3eb: "كعب ((X + 0.6) ÷ 2)",
-  janeb: "جانب (Y + 5)",
-  changalMaskeh: "شنجل + ماسكه ((جانب - 11) + 2.5)",
-  menkhoulArd: "منخول عرض (((X - 3.2 + 0.6) ÷ 2) + 2)",
-  menkhoul3low: "منخول علو (شنجل + ماسكه + 1.8)",
-  zoujajArd: "زجاج عرض (كعب - 7.5)",
-  zoujaj3low: "زجاج علو (شنجل + ماسكه - 8.5)",
+  x: "العرض",
+  y: "العلو",
+  sekeh: "٣٫٢ - سيكه",
+  ka3eb: "٢ / ٠٫٦ + كعب",
+  janeb: "٥ + جانب",
+  changalMaskeh: "١١ - شنجل + ماسكه",
+  menkhoulArd: "٢ + منخول عرض",
+  menkhoul3low: "١٫٨ + منخول علو",
+  zoujajArd: "٧٫٥ - زجاج عرض",
+  zoujaj3low: "٨٫٥ - زجاج علو",
 } as const;
 
 const getInitialRows = (): Row[] =>
@@ -91,15 +92,16 @@ export const ArabicExcelTable: React.FC = () => {
           {rows.map((row) => {
             const { x, y } = row;
 
-            // ✅ الحسابات
             const sekeh = x - 3.2;
-            const ka3eb = (x + 0.6) / 2;
+            const ka3eb = ((x + 0.6) / 2);
             const janeb = y + 5;
             const changalMaskeh = (janeb - 11) + 2.5;
-            const menkhoulArd = ((x - 3.2 + 0.6) / 2) + 2;
+            const menkhoulArd = ka3eb + 2;
             const menkhoul3low = changalMaskeh + 1.8;
             const zoujajArd = ka3eb - 7.5;
             const zoujaj3low = changalMaskeh - 8.5;
+
+            const showValues = x !== 0 || y !== 0;
 
             return (
               <TableRow key={row.id}>
@@ -119,14 +121,14 @@ export const ArabicExcelTable: React.FC = () => {
                     onChange={(e) => handleChange(row.id, "y", e.currentTarget.value)}
                   />
                 </TableCell>
-                <TableCell>{format(sekeh)}</TableCell>
-                <TableCell>{format(ka3eb)}</TableCell>
-                <TableCell>{format(janeb)}</TableCell>
-                <TableCell>{format(changalMaskeh)}</TableCell>
-                <TableCell>{format(menkhoulArd)}</TableCell>
-                <TableCell>{format(menkhoul3low)}</TableCell>
-                <TableCell>{format(zoujajArd)}</TableCell>
-                <TableCell>{format(zoujaj3low)}</TableCell>
+                <TableCell>{showValues ? format(sekeh) : ""}</TableCell>
+                <TableCell>{showValues ? format(ka3eb) : ""}</TableCell>
+                <TableCell>{showValues ? format(janeb) : ""}</TableCell>
+                <TableCell>{showValues ? format(changalMaskeh) : ""}</TableCell>
+                <TableCell>{showValues ? format(menkhoulArd) : ""}</TableCell>
+                <TableCell>{showValues ? format(menkhoul3low) : ""}</TableCell>
+                <TableCell>{showValues ? format(zoujajArd) : ""}</TableCell>
+                <TableCell>{showValues ? format(zoujaj3low) : ""}</TableCell>
               </TableRow>
             );
           })}
