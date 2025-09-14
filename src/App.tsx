@@ -1,8 +1,8 @@
 import "./App.css";
-import { AggregatedTable } from "./Table";
+import { ArabicExcelTable } from "./Table";
 
 function App() {
-  return <AggregatedTable />;
+  return <ArabicExcelTable />;
 }
 
 export default App;
