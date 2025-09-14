@@ -13,29 +13,31 @@ import {
 
 interface Row {
   id: number;
-  value1: number;
-  value2: number;
+  x: number; // العرض
+  y: number; // العلو
 }
 
 const COLUMN_TITLES = {
-  value1: "Column 1",
-  value2: "Column 2",
-  sum: "Sum",
-  diff: "Difference",
-  prod: "Product",
-  quot: "Quotient",
-  avg: "Average",
-  pct: "Pct (v1/v2)",
+  x: "العرض (X)",
+  y: "العلو (Y)",
+  sekeh: "سيكه (X - 3.2)",
+  ka3eb: "كعب ((X + 0.6) ÷ 2)",
+  janeb: "جانب (Y + 5)",
+  changalMaskeh: "شنجل + ماسكه ((جانب - 11) + 2.5)",
+  menkhoulArd: "منخول عرض (((X - 3.2 + 0.6) ÷ 2) + 2)",
+  menkhoul3low: "منخول علو (شنجل + ماسكه + 1.8)",
+  zoujajArd: "زجاج عرض (كعب - 7.5)",
+  zoujaj3low: "زجاج علو (شنجل + ماسكه - 8.5)",
 } as const;
 
 const getInitialRows = (): Row[] =>
-  Array.from({ length: 6 }, (_, i) => ({
+  Array.from({ length: 20 }, (_, i) => ({
     id: i + 1,
-    value1: 0,
-    value2: 0,
+    x: 0,
+    y: 0,
   }));
 
-export const AggregatedTable: React.FC = () => {
+export const ArabicExcelTable: React.FC = () => {
   const [rows, setRows] = useState<Row[]>(getInitialRows());
 
   const handleChange = (
@@ -52,84 +54,80 @@ export const AggregatedTable: React.FC = () => {
   };
 
   const format = (num: number | null): string =>
-    num === null ? "-" : num.toFixed(2);
+    num === null ? "–" : num.toFixed(2);
 
   const addRow = () => {
     const nextId = rows.length ? Math.max(...rows.map((r) => r.id)) + 1 : 1;
-    setRows((prev) => [...prev, { id: nextId, value1: 0, value2: 0 }]);
+    setRows((prev) => [...prev, { id: nextId, x: 0, y: 0 }]);
   };
 
   const resetRows = () => setRows(getInitialRows());
 
   return (
-    <div>
-      <div className="flex space-x-2 mb-4">
-        <Button onClick={addRow}>Add Row</Button>
+    <div dir="rtl" className="p-4">
+      <div className="flex space-x-2 mb-4 justify-end">
+        <Button onClick={addRow}>➕ إضافة صف</Button>
         <Button variant="outline" onClick={resetRows}>
-          Reset
+          🔄 إعادة تعيين
         </Button>
       </div>
 
-      <Table>
+      <Table className="border">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-24 text-center">
-              {COLUMN_TITLES.value1}
-            </TableHead>
-            <TableHead className="w-24 text-center">
-              {COLUMN_TITLES.value2}
-            </TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.sum}</TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.diff}</TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.prod}</TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.quot}</TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.avg}</TableHead>
-            <TableHead className="text-center">{COLUMN_TITLES.pct}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.x}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.y}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.sekeh}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.ka3eb}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.janeb}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.changalMaskeh}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.menkhoulArd}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.menkhoul3low}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.zoujajArd}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.zoujaj3low}</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {rows.map((row) => {
-            const { value1, value2 } = row;
-            const sum = value1 + value2;
-            const diff = value1 - value2;
-            const prod = value1 * value2;
-            const quot = value2 !== 0 ? value1 / value2 : null;
-            const avg = (value1 + value2) / 2;
-            const pct = value2 !== 0 ? (value1 / value2) * 100 : null;
+            const { x, y } = row;
+
+            // ✅ calculations
+            const sekeh = x - 3.2;
+            const ka3eb = (x + 0.6) / 2;
+            const janeb = y + 5;
+            const changalMaskeh = (janeb - 11) + 2.5;
+            const menkhoulArd = ((x - 3.2 + 0.6) / 2) + 2;
+            const menkhoul3low = changalMaskeh + 1.8;
+            const zoujajArd = ka3eb - 7.5;
+            const zoujaj3low = changalMaskeh - 8.5;
 
             return (
               <TableRow key={row.id}>
-                <TableCell className="w-24">
+                <TableCell className="w-20">
                   <Input
                     type="number"
-                    className="appearance-none"
-                    value={value1}
+                    value={x}
                     onFocus={(e) => e.currentTarget.select()}
-                    onChange={(e) =>
-                      handleChange(row.id, "value1", e.currentTarget.value)
-                    }
+                    onChange={(e) => handleChange(row.id, "x", e.currentTarget.value)}
                   />
                 </TableCell>
-                <TableCell className="w-24">
+                <TableCell className="w-20">
                   <Input
                     type="number"
-                    className="appearance-none"
-                    value={value2}
+                    value={y}
                     onFocus={(e) => e.currentTarget.select()}
-                    onChange={(e) =>
-                      handleChange(row.id, "value2", e.currentTarget.value)
-                    }
+                    onChange={(e) => handleChange(row.id, "y", e.currentTarget.value)}
                   />
                 </TableCell>
-                <TableCell>{format(sum)}</TableCell>
-                <TableCell>{format(diff)}</TableCell>
-                <TableCell>{format(prod)}</TableCell>
-                <TableCell>{format(quot)}</TableCell>
-                <TableCell>{format(avg)}</TableCell>
-                <TableCell>
-                  {pct === null ? "–" : `${pct.toFixed(2)}%`}
-                </TableCell>
+                <TableCell>{format(sekeh)}</TableCell>
+                <TableCell>{format(ka3eb)}</TableCell>
+                <TableCell>{format(janeb)}</TableCell>
+                <TableCell>{format(changalMaskeh)}</TableCell>
+                <TableCell>{format(menkhoulArd)}</TableCell>
+                <TableCell>{format(menkhoul3low)}</TableCell>
+                <TableCell>{format(zoujajArd)}</TableCell>
+                <TableCell>{format(zoujaj3low)}</TableCell>
               </TableRow>
             );
           })}
