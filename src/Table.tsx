@@ -23,7 +23,8 @@ const COLUMN_TITLES = {
   sekeh: "٣٫٢ - سيكه",
   ka3eb: "٢ / ٠٫٦ + كعب",
   janeb: "٥ + جانب",
-  changalMaskeh: "١١ - شنجل + ماسكه",
+  changalMaskeh: "١٠٫٩ - شنجل + ماسكه",
+  adapter: "٢٫٥ + أدابتر",
   menkhoulArd: "٢ + منخول عرض",
   menkhoul3low: "١٫٨ + منخول علو",
   zoujajArd: "٧٫٥ - زجاج عرض",
@@ -81,6 +82,7 @@ export const ArabicExcelTable: React.FC = () => {
             <TableHead className="text-center">{COLUMN_TITLES.ka3eb}</TableHead>
             <TableHead className="text-center">{COLUMN_TITLES.janeb}</TableHead>
             <TableHead className="text-center">{COLUMN_TITLES.changalMaskeh}</TableHead>
+            <TableHead className="text-center">{COLUMN_TITLES.adapter}</TableHead>
             <TableHead className="text-center">{COLUMN_TITLES.menkhoulArd}</TableHead>
             <TableHead className="text-center">{COLUMN_TITLES.menkhoul3low}</TableHead>
             <TableHead className="text-center">{COLUMN_TITLES.zoujajArd}</TableHead>
@@ -95,7 +97,8 @@ export const ArabicExcelTable: React.FC = () => {
             const sekeh = x - 3.2;
             const ka3eb = ((x + 0.6) / 2);
             const janeb = y + 5;
-            const changalMaskeh = (janeb - 11) + 2.5;
+            const changalMaskeh = janeb - 10.9;
+            const adapter = changalMaskeh + 2.5;
             const menkhoulArd = ka3eb + 2;
             const menkhoul3low = changalMaskeh + 1.8;
             const zoujajArd = ka3eb - 7.5;
@@ -125,6 +128,7 @@ export const ArabicExcelTable: React.FC = () => {
                 <TableCell>{showValues ? format(ka3eb) : ""}</TableCell>
                 <TableCell>{showValues ? format(janeb) : ""}</TableCell>
                 <TableCell>{showValues ? format(changalMaskeh) : ""}</TableCell>
+                <TableCell>{showValues ? format(adapter) : ""}</TableCell>
                 <TableCell>{showValues ? format(menkhoulArd) : ""}</TableCell>
                 <TableCell>{showValues ? format(menkhoul3low) : ""}</TableCell>
                 <TableCell>{showValues ? format(zoujajArd) : ""}</TableCell>
