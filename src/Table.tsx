@@ -21,7 +21,7 @@ const COLUMN_TITLES = {
   x: "العرض",
   y: "العلو",
   sekeh: "٣٫٢ - سيكه",
-  ka3eb: "٢ / ٠٫٦ + كعب",
+  ka3eb: "٢ / ٠٫٦ + سيكه",
   janeb: "٥ + جانب",
   changalMaskeh: "١٠٫٩ - شنجل + ماسكه",
   adapter: "٢٫٥ + أدابتر",
