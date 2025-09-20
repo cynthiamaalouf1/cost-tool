@@ -95,7 +95,7 @@ export const ArabicExcelTable: React.FC = () => {
             const { x, y } = row;
 
             const sekeh = x - 3.2;
-            const ka3eb = ((x + 0.6) / 2);
+            const ka3eb = ((sekeh + 0.6) / 2);
             const janeb = y + 5;
             const changalMaskeh = janeb - 10.9;
             const adapter = changalMaskeh + 2.5;
